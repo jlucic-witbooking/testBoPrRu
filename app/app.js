@@ -6,7 +6,8 @@ angular.module('myApp', [
   'myApp.view1',
   'ui.date',
   'ui.bootstrap',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+    'frapontillo.bootstrap-duallistbox'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});

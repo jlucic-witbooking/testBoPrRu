@@ -1,4 +1,4 @@
-<form role="form" class="mainForm center-block">
+<form ng-controller="View1Ctrl" role="form" class="mainForm center-block">
 
     <div class="row firstRow">
 
@@ -163,6 +163,78 @@
                 </label>
             </div>
         </div>
+    </div>
+
+    <h2>
+        trans.stay
+    </h2>
+
+    <div class="row stayDateRow row-xs-height ">
+
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.dates</span>
+        </div>
+
+        <div class="row col-xs-12 col-sm-10 col-md-11  col-sm-height col-middle ">
+
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <input type="date" class="form-control" id="stayEntryDate" placeholder="{{ 'trans.field.stayEntryDate.label' | translate }}" ui-date>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <input type="date" class="form-control" id="stayExitDate" placeholder="{{ 'trans.field.stayExitDate.label' | translate }}" ui-date>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 timeZonePicker">
+                <div class="input-group">
+                    <select id="stayDateTimezonePicker" class="form-control">
+                        <option>{{ 'trans.field.stayDateTimezone.placeholder' | translate }}</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <h2>
+        trans.protection
+    </h2>
+
+    <div class="row protectionDateRow row-xs-height ">
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.FieldCodeLabel</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <div class="col-sm-4">
+                <input type="email" class="form-control" placeholder="{{ 'trans.FieldCodePlaceholder' | translate }}">
+            </div>
+        </div>
+    </div>
+    <div class="row protectionDateRow row-xs-height ">
+
+    <select ng-model="model"
+            ng-options="obj.id as obj.text for obj in elements"
+            multiple
+            bs-duallistbox
+            ></select>
     </div>
 
 
