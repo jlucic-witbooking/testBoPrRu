@@ -228,14 +228,22 @@
             </div>
         </div>
     </div>
-    <div class="row protectionDateRow row-xs-height ">
 
-    <select ng-model="model"
-            ng-options="obj.id as obj.text for obj in elements"
-            multiple
-            bs-duallistbox
-            ></select>
+    <div class="row protectionDateRow row-xs-height ">
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.FieldCodeLabel</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <select ng-model="model"
+                    ng-options="obj.id as obj.text for obj in list"
+                    multiple
+                    bs-duallistbox>
+            </select>
+        </div>
     </div>
 
 
+
 </form>
+
