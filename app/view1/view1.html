@@ -1,0 +1,169 @@
+<form role="form" class="mainForm center-block">
+
+    <div class="row firstRow">
+
+        <div class="col-xs-12 col-sm-12 col-md-4 nameContainer">
+            <label for="email" translate>trans.FieldEmailLabel</label>
+            <input type="email" class="form-control" id="email" placeholder="{{ 'trans.FieldEmailPlaceholder' | translate }}">
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 priorityContainer">
+            <label for="priority" translate>trans.FieldPriorityLabel</label>
+            <select id="priority" class="form-control">
+                <option>{{ 'trans.FieldPriorityPlaceholder' | translate }}</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 variationContainer">
+            <label for="priority" translate>trans.field.variation.label</label>
+            <div class="input-group">
+                <select class="form-control segmentedSelectWithInput" >
+                    <option>+</option>
+                    <option>-</option>
+                </select>
+                <input type="text" class="form-control segmentedSelectWithInput" >
+                <select class="form-control segmentedSelectWithInput" >
+                    <option>%</option>
+                    <option>{{defaultCurrency}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <h2>
+        trans.contract
+    </h2>
+
+    <div class="row contractDateRow row-xs-height ">
+
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.dates</span>
+        </div>
+
+        <div class="row col-xs-12 col-sm-10 col-md-11  col-sm-height col-middle ">
+
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <input type="date" class="form-control" id="contractEntryDate" placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <input type="date" class="form-control" id="contractExitDate" placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 timeZonePicker">
+                <div class="input-group">
+                    <select id="contractDateTimezonePicker" class="form-control">
+                        <option>{{ 'trans.field.contractDateTimezone.placeholder' | translate }}</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row contractTimeRow row-sm-height ">
+
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.hours</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+
+            <div class="row  row-sm-height  col-xs-12  innerRow" >
+
+
+                <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle" >
+                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle">
+                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4 col-sm-height col-middle timeZonePicker  ">
+                    <div class="input-group">
+                        <select id="contractTimeTimezonePicker" class="form-control">
+                            <option>{{ 'trans.field.contractDateTimezone.placeholder' | translate }}</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row contractDaysRow row-sm-height ">
+
+        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+            <span translate>trans.days</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <div class="col-md-1 seven-cols">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.monday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.tuesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.wednesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.thursday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.friday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.saturday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols lastDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox"  value="option1"> trans.sunday
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+</form>
