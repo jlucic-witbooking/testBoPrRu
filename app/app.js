@@ -7,7 +7,8 @@ angular.module('myApp', [
   'ui.date',
   'ui.bootstrap',
   'pascalprecht.translate',
-    'frapontillo.bootstrap-duallistbox'
+  'frapontillo.bootstrap-duallistbox',
+  'checklist-model'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
