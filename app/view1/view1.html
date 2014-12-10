@@ -4,7 +4,12 @@
 
         <div class="col-xs-12 col-sm-12 col-md-4 nameContainer">
             <label for="email" translate>trans.FieldEmailLabel</label>
+<<<<<<< HEAD
             <input class="form-control"  id="email" ng-model="ticker"  placeholder="{{ 'trans.FieldEmailPlaceholder' | translate }}">
+=======
+            <input type="email" class="form-control" id="email"
+                   placeholder="{{ 'trans.FieldEmailPlaceholder' | translate }}">
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-4 priorityContainer">
@@ -20,13 +25,23 @@
 
         <div class="col-xs-12 col-sm-12 col-md-4 variationContainer">
             <label for="priority" translate>trans.field.variation.label</label>
+
             <div class="input-group">
+<<<<<<< HEAD
                 <select class="form-control segmentedSelectWithInput" ng-model="data.operation">
                     <option>+</option>
                     <option>-</option>
                 </select>
                 <input type="text" class="form-control segmentedSelectWithInput" ng-model="data.priceVariation">
                 <select class="form-control segmentedSelectWithInput" ng-model="data.percentage">
+=======
+                <select class="form-control segmentedSelectWithInput">
+                    <option>+</option>
+                    <option>-</option>
+                </select>
+                <input type="text" class="form-control segmentedSelectWithInput">
+                <select class="form-control segmentedSelectWithInput">
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                     <option>%</option>
                     <option>{{defaultCurrency}}</option>
                 </select>
@@ -41,7 +56,7 @@
 
     <div class="row contractDateRow row-xs-height ">
 
-        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.dates</span>
         </div>
 
@@ -50,21 +65,33 @@
             <div class="col-xs-2 col-sm-2 col-md-2">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
+<<<<<<< HEAD
                     <input class="form-control" id="contractEntryDate" ng-model="data.contractEntryDate" placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date="dateOptions">
+=======
+                    <input type="date" class="form-control" id="contractEntryDate"
+                           placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                 </div>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
+<<<<<<< HEAD
                     <input class="form-control" id="contractExitDate"  ng-model="data.contractExitDate" placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date="dateOptions">
+=======
+                    <input type="date" class="form-control" id="contractExitDate"
+                           placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                 </div>
             </div>
 
@@ -86,18 +113,30 @@
 
     <div class="row contractTimeRow row-sm-height ">
 
-        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.hours</span>
         </div>
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
 
             <div class="row  row-sm-height  col-xs-12  innerRow">
+<<<<<<< HEAD
                 <div class="col-xs-12 col-sm-2 col-md-2  col-sm-height col-middle" >
                     <timepicker ng-model="data.timeto" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
                 </div>
                 <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height col-middle">
                     <timepicker ng-model="data.timeuntil" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
+=======
+
+
+                <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle">
+                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                                show-meridian="true"></timepicker>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle">
+                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                                show-meridian="true"></timepicker>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                 </div>
 
                 <div class="col-xs-12 col-sm-4 col-md-4 col-sm-height col-middle timeZonePicker  ">
@@ -120,13 +159,53 @@
 
     <div class="row contractDaysRow row-sm-height ">
 
-        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.days</span>
         </div>
+<<<<<<< HEAD
         <div ng-repeat="day in daysList" class="col-md-1 seven-cols middleDay">
             <label class="checkbox-inline">
                 <input type="checkbox" checklist-model="data.days" checklist-value="day"> trans.{{day}}
             </label>
+=======
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <div class="col-md-1 seven-cols">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.monday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.tuesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.wednesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.thursday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.friday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.saturday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols lastDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.sunday
+                </label>
+            </div>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
         </div>
         <button ng-click="checkAll()">{{'check all' | translate}}</button>
         <button ng-click="uncheckAll()">{{'uncheck all' | translate}}</button>
@@ -138,7 +217,7 @@
 
     <div class="row stayDateRow row-xs-height ">
 
-        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.dates</span>
         </div>
 
@@ -147,21 +226,33 @@
             <div class="col-xs-2 col-sm-2 col-md-2">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
+<<<<<<< HEAD
                     <input class="form-control" id="stayEntryDate" ng-model="data.stayEntryDate" placeholder="{{ 'trans.field.stayEntryDate.label' | translate }}" ui-date="dateOptions">
+=======
+                    <input type="date" class="form-control" id="stayEntryDate"
+                           placeholder="{{ 'trans.field.stayEntryDate.label' | translate }}" ui-date>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                 </div>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
+<<<<<<< HEAD
                     <input class="form-control" id="stayExitDate" ng-model="data.stayExitDate" placeholder="{{ 'trans.field.stayExitDate.label' | translate }}" ui-date="dateOptions">
+=======
+                    <input type="date" class="form-control" id="stayExitDate"
+                           placeholder="{{ 'trans.field.stayExitDate.label' | translate }}" ui-date>
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
                 </div>
             </div>
 
@@ -180,18 +271,69 @@
         </div>
     </div>
 
+    <div class="row stayDaysRow row-sm-height ">
+
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
+            <span translate>trans.days</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <div class="col-md-1 seven-cols">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.monday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.tuesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.wednesday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.thursday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.friday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.saturday
+                </label>
+            </div>
+            <div class="col-md-1 seven-cols lastDay">
+                <label class="checkbox-inline  ">
+                    <input type="checkbox" value="option1"> trans.sunday
+                </label>
+            </div>
+        </div>
+    </div>
+
+
     <h2>
         trans.protection
     </h2>
 
     <div class="row protectionDateRow row-xs-height ">
-        <div class="col-xs-12 col-sm-2 col-md-1 col-sm-height col-middle">
-            <span translate>trans.FieldCodeLabel</span>
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
+            <span translate>trans.code</span>
         </div>
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+<<<<<<< HEAD
             <div class="col-sm-4">
                 <input class="form-control" ng-model="data.protection" placeholder="{{ 'trans.FieldCodePlaceholder' | translate }}">
+=======
+            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                <input type="email" class="form-control" placeholder="{{ 'trans.FieldCodePlaceholder' | translate }}">
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
             </div>
         </div>
     </div>
@@ -200,6 +342,7 @@
         trans.countries
     </h2>
     <div class="row protectionDateRow row-xs-height ">
+<<<<<<< HEAD
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
             <select ng-model="data.countries"
                     ng-options="obj.id as obj.text for obj in list"
@@ -211,5 +354,59 @@
 <pre class="alert alert-info">
     {{data | json}}
 </pre>
+=======
+        <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
+            <span translate>trans.ctry</span>
+        </div>
+
+        <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
+            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                <select ng-model="model"
+                        ng-options="obj.id as obj.text for obj in list"
+                        multiple
+                        bs-duallistbox>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+
+>>>>>>> 95fbc8b7df62e3c710d0213c776dd7c366e2b634
 </form>
+
+<script>
+
+    function checkHover() {
+        var filter = $(this).attr('filter');
+        $(this).addClass('checkHover');
+
+        var clickedText = $(this).text();
+        $(this).parent().parent().parent().find('div.input').each(function (i, el) {
+            $(this).find('label > span').each(function (j, span) {
+                if ($(span).attr('filter') == filter
+                        && $(span).text() == clickedText) {
+                    $(span).addClass('checkHover')
+                }
+            })
+        })
+    }
+
+
+    function uncheckHover() {
+        var filter = $(this).attr('filter');
+        $(this).removeClass('checkHover')
+
+        var clickedText = $(this).text();
+
+        $(this).parent().parent().parent().find('div.input').each(function (i, el) {
+            $(this).find('label > span').each(function (j, span) {
+                if ($(span).attr('filter') == filter
+                        && $(span).text() == clickedText) {
+                    $(span).removeClass('checkHover')
+                }
+            })
+        })
+    }
+</script>
 

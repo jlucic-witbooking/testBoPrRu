@@ -1,141 +1,171 @@
 /* app css stylesheet */
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
 }
+
 .menu:before {
   content: "[";
 }
+
 .menu:after {
   content: "]";
 }
+
 .menu > li {
   display: inline;
 }
+
 .menu > li:before {
   content: "|";
   padding-right: 0.3em;
 }
+
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
 }
+
+
+
+
+
+
+
 * {
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
   border-radius: 0 !important;
 }
-.mainContainer {
+
+.mainContainer{
   margin-left: auto;
   margin-right: auto;
 }
+
 /*TODO, USE MEDIA QUERIES*/
-.mainForm {
+.mainForm{
   width: 1200px;
 }
-.segmentedSelectWithInput {
+
+.segmentedSelectWithInput{
   float: left !important;
   width: initial !important;
 }
+
 /*TODO, USE MEDIA QUERIES*/
-.contractDateRow {
+.contractDateRow{
   height: 70px;
 }
+
+
 .v-center {
-  display: table !important;
-  border: 2px solid gray;
-  height: 300px;
+  display:table !important;
+  border:2px solid gray;
+  height:300px;
 }
+
 .content {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
 }
+
+
+
 /* columns of same height styles */
 .container-xs-height {
-  display: table;
-  padding-left: 0px;
-  padding-right: 0px;
+  display:table;
+  padding-left:0px;
+  padding-right:0px;
 }
 .row-xs-height {
-  display: table-row;
+  display:table-row;
 }
 .col-xs-height {
-  display: table-cell;
-  float: none;
+  display:table-cell;
+  float:none;
 }
 @media (min-width: 768px) {
   .container-sm-height {
-    display: table;
-    padding-left: 0px;
-    padding-right: 0px;
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
   }
   .row-sm-height {
-    display: table-row;
+    display:table-row;
   }
   .col-sm-height {
-    display: table-cell;
-    float: none;
+    display:table-cell;
+    float:none;
   }
 }
 @media (min-width: 992px) {
   .container-md-height {
-    display: table;
-    padding-left: 0px;
-    padding-right: 0px;
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
   }
   .row-md-height {
-    display: table-row;
+    display:table-row;
   }
   .col-md-height {
-    display: table-cell;
-    float: none;
+    display:table-cell;
+    float:none;
   }
 }
 @media (min-width: 1200px) {
   .container-lg-height {
-    display: table;
-    padding-left: 0px;
-    padding-right: 0px;
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
   }
   .row-lg-height {
-    display: table-row;
+    display:table-row;
   }
   .col-lg-height {
-    display: table-cell;
-    float: none;
+    display:table-cell;
+    float:none;
   }
 }
+
 /* firefox fix */
 .img-responsive {
   width: 100%;
 }
+
 /* vertical alignment styles */
 .col-top {
-  vertical-align: top;
+  vertical-align:top;
 }
 .col-middle {
-  vertical-align: middle;
+  vertical-align:middle;
 }
 .col-bottom {
-  vertical-align: bottom;
+  vertical-align:bottom;
 }
-.innerRow {
+
+.innerRow{
   margin-left: 0px;
   margin-right: 0px;
   padding-left: 0px;
   padding-right: 0px;
 }
-@media (min-width: 768px) {
+
+
+
+@media (min-width: 768px){
   .seven-cols.col-md-1,
   .seven-cols.col-sm-1,
-  .seven-cols.col-lg-1 {
+  .seven-cols.col-lg-1  {
     width: 100%;
     *width: 100%;
   }
 }
+
 @media (min-width: 992px) {
   .seven-cols.col-md-1,
   .seven-cols.col-sm-1,
@@ -144,6 +174,7 @@
     *width: 14.285714285714285714285714285714%;
   }
 }
+
 /**
  *  The following is not really needed in this case
  *  Only to demonstrate the usage of @media for large screens
@@ -156,9 +187,12 @@
     *width: 14.285714285714285714285714285714%;
   }
 }
-.lastDay {
+
+.lastDay{
   text-align: right;
 }
-.middleDay {
+
+.middleDay{
   text-align: center;
 }
+
