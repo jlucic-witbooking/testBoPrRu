@@ -1,17 +1,17 @@
-<form ng-controller="View1Ctrl" role="form" class="mainForm center-block">
+<form ng-controller="editRule" role="form" class="mainForm center-block">
 
     <div class="row firstRow">
 
         <div class="col-xs-12 col-sm-12 col-md-4 nameContainer">
-            <label for="name" translate>trans.FieldEmailLabel</label>
-            <input type="text" class="form-control" id="name" ng-model="rule.name"
+            <label for="name" translate>trans.field.name.label</label>
+            <input type="text" class="form-control" id="name" ng-model="data.ticker"
                    placeholder="{{ 'trans.field.name.placeholder' | translate }}">
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-4 priorityContainer">
             <label for="priority" translate>trans.field.priority.label</label>
             <select id="priority" class="form-control"
-                    ng-model="rule.priority" ng-options="priority.label for priority in priorities">
+                    ng-model="data.rulePriority" ng-options="priority.label for priority in priorities">
                 <option value="">-- {{ 'trans.field.priority.placeholder' | translate }} --</option>
             </select>
         </div>
@@ -20,20 +20,16 @@
             <label for="variation" translate>trans.field.variation.label</label>
             <div class="input-group">
                 <select class="form-control segmentedSelectWithInput"
-                        ng-options="priority.label for priority in priorities"
-                        ng-model="variation.sign">
-                    <option>+</option>
-                    <option>-</option>
+                        ng-options="sign.label for sign in signs"
+                        ng-model="data.operation">
                 </select>
                 <input id="variation"
-                       type="number"
+                       
                        class="form-control segmentedSelectWithInput"
-                       ng-model="rule.variation">
+                       ng-model="data.priceVariation">
                 <select class="form-control segmentedSelectWithInput"
-                        ng-options="percentage.label for priority in priorities"
-                        ng-model="variation.percentage">
-                    <option>%</option>
-                    <option>{{currency}}</option>
+                        ng-options="variationType.label for variationType in variationTypes"
+                        ng-model="data.percentage">
                 </select>
             </div>
         </div>
@@ -60,8 +56,9 @@
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input type="date" class="form-control" id="contractEntryDate"
-                           placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date>
+                    <input  class="form-control" id="contractEntryDate"
+                           placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date
+                           ng-model="data.contractEntryDate">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -72,14 +69,16 @@
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input type="date" class="form-control" id="contractExitDate"
-                           placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date>
+                    <input  class="form-control" id="contractExitDate"
+                           placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date
+                           ng-model="data.contractExitDate" >
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-4 col-md-4 timeZonePicker">
                 <div class="input-group">
-                    <select id="contractDateTimezonePicker" class="form-control">
+                    <select id="contractDateTimezonePicker" class="form-control"
+                            ng-model="data.contractDateTimezonePicker">
                         <option>{{ 'trans.field.contractDateTimezone.placeholder' | translate }}</option>
                         <option>2</option>
                         <option>3</option>
@@ -105,17 +104,22 @@
 
 
                 <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle">
-                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
-                                show-meridian="true"></timepicker>
+                    <timepicker ng-change="changed()"
+                                hour-step="hstep"
+                                minute-step="mstep"
+                                show-meridian="true"
+                                ng-model="data.timeto"></timepicker>
                 </div>
                 <div class="col-xs-12 col-sm-4 col-md-4  col-sm-height col-middle">
-                    <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
-                                show-meridian="true"></timepicker>
+                    <timepicker ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                                show-meridian="true"
+                                ng-model="data.timeuntil"></timepicker>
+
                 </div>
 
                 <div class="col-xs-12 col-sm-4 col-md-4 col-sm-height col-middle timeZonePicker  ">
                     <div class="input-group">
-                        <select id="contractTimeTimezonePicker" class="form-control">
+                        <select id="contractTimeTimezonePicker" class="form-control" ng-model="data.contractTimeTimezonePicker">
                             <option>{{ 'trans.field.contractDateTimezone.placeholder' | translate }}</option>
                             <option>2</option>
                             <option>3</option>
@@ -138,42 +142,14 @@
         </div>
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
-            <div class="col-md-1 seven-cols">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.monday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.tuesday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.wednesday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.thursday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.friday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.saturday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols lastDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.sunday
+            <div ng-repeat="day in daysList" class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline">
+                    <input type="checkbox" checklist-model="data.days" checklist-value="day"> trans.{{day}}
                 </label>
             </div>
         </div>
+        <button ng-click="checkAll()">{{'check all' | translate}}</button>
+        <button ng-click="uncheckAll()">{{'uncheck all' | translate}}</button>
     </div>
 
     <h2>
@@ -196,8 +172,9 @@
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input type="date" class="form-control" id="stayEntryDate"
-                           placeholder="{{ 'trans.field.stayEntryDate.label' | translate }}" ui-date>
+                    <input  class="form-control" id="stayEntryDate"
+                           placeholder="{{ 'trans.field.stayEntryDate.label' | translate }}" ui-date
+                           ng-model="data.stayEntryDate" >
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -208,14 +185,15 @@
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input type="date" class="form-control" id="stayExitDate"
-                           placeholder="{{ 'trans.field.stayExitDate.label' | translate }}" ui-date>
+                    <input  class="form-control" id="stayExitDate"
+                           placeholder="{{ 'trans.field.stayExitDate.label' | translate }}" ui-date
+                           ng-model="data.stayExitDate">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-4 col-md-4 timeZonePicker">
                 <div class="input-group">
-                    <select id="stayDateTimezonePicker" class="form-control">
+                    <select id="stayDateTimezonePicker" class="form-control" ng-model="data.stayDateTimezonePicker">
                         <option>{{ 'trans.field.stayDateTimezone.placeholder' | translate }}</option>
                         <option>2</option>
                         <option>3</option>
@@ -228,49 +206,21 @@
         </div>
     </div>
 
-    <div class="row stayDaysRow row-sm-height ">
+    <div class="row contractDaysRow row-sm-height ">
 
         <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.days</span>
         </div>
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
-            <div class="col-md-1 seven-cols">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.monday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.tuesday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.wednesday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.thursday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.friday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols middleDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.saturday
-                </label>
-            </div>
-            <div class="col-md-1 seven-cols lastDay">
-                <label class="checkbox-inline  ">
-                    <input type="checkbox" value="option1"> trans.sunday
+            <div ng-repeat="day in daysList" class="col-md-1 seven-cols middleDay">
+                <label class="checkbox-inline">
+                    <input type="checkbox" checklist-model="data.stayDays" checklist-value="day"> trans.{{day}}
                 </label>
             </div>
         </div>
+        <button ng-click="checkAllStay()">{{'check all' | translate}}</button>
+        <button ng-click="uncheckAllStay()">{{'uncheck all' | translate}}</button>
     </div>
 
 
@@ -285,7 +235,9 @@
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
             <div class="col-xs-12 col-sm-12 col-md-12 ">
-                <input type="email" class="form-control" placeholder="{{ 'trans.FieldCodePlaceholder' | translate }}">
+                <input type="text" class="form-control"
+                       ng-model="data.protection"
+                       placeholder="{{ 'trans.field.code.placeholder' | translate }}">
             </div>
         </div>
     </div>
@@ -297,7 +249,7 @@
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
             <div class="col-xs-12 col-sm-12 col-md-12 ">
-                <select ng-model="model"
+                <select ng-model="data.countries"
                         ng-options="obj.id as obj.text for obj in list"
                         multiple
                         bs-duallistbox>
@@ -307,41 +259,8 @@
         </div>
     </div>
 
+    <pre class="alert alert-info">
+        {{data | json}}
+    </pre>
 
 </form>
-
-<script>
-
-    function checkHover() {
-        var filter = $(this).attr('filter');
-        $(this).addClass('checkHover');
-
-        var clickedText = $(this).text();
-        $(this).parent().parent().parent().find('div.input').each(function (i, el) {
-            $(this).find('label > span').each(function (j, span) {
-                if ($(span).attr('filter') == filter
-                        && $(span).text() == clickedText) {
-                    $(span).addClass('checkHover')
-                }
-            })
-        })
-    }
-
-
-    function uncheckHover() {
-        var filter = $(this).attr('filter');
-        $(this).removeClass('checkHover')
-
-        var clickedText = $(this).text();
-
-        $(this).parent().parent().parent().find('div.input').each(function (i, el) {
-            $(this).find('label > span').each(function (j, span) {
-                if ($(span).attr('filter') == filter
-                        && $(span).text() == clickedText) {
-                    $(span).removeClass('checkHover')
-                }
-            })
-        })
-    }
-</script>
-
