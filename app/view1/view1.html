@@ -3,34 +3,37 @@
     <div class="row firstRow">
 
         <div class="col-xs-12 col-sm-12 col-md-4 nameContainer">
-            <label for="email" translate>trans.FieldEmailLabel</label>
-            <input type="email" class="form-control" id="email"
-                   placeholder="{{ 'trans.FieldEmailPlaceholder' | translate }}">
+            <label for="name" translate>trans.FieldEmailLabel</label>
+            <input type="text" class="form-control" id="name" ng-model="rule.name"
+                   placeholder="{{ 'trans.field.name.placeholder' | translate }}">
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-4 priorityContainer">
-            <label for="priority" translate>trans.FieldPriorityLabel</label>
-            <select id="priority" class="form-control">
-                <option>{{ 'trans.FieldPriorityPlaceholder' | translate }}</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <label for="priority" translate>trans.field.priority.label</label>
+            <select id="priority" class="form-control"
+                    ng-model="rule.priority" ng-options="priority.label for priority in priorities">
+                <option value="">-- {{ 'trans.field.priority.placeholder' | translate }} --</option>
             </select>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-4 variationContainer">
-            <label for="priority" translate>trans.field.variation.label</label>
-
+            <label for="variation" translate>trans.field.variation.label</label>
             <div class="input-group">
-                <select class="form-control segmentedSelectWithInput">
+                <select class="form-control segmentedSelectWithInput"
+                        ng-options="priority.label for priority in priorities"
+                        ng-model="variation.sign">
                     <option>+</option>
                     <option>-</option>
                 </select>
-                <input type="text" class="form-control segmentedSelectWithInput">
-                <select class="form-control segmentedSelectWithInput">
+                <input id="variation"
+                       type="number"
+                       class="form-control segmentedSelectWithInput"
+                       ng-model="rule.variation">
+                <select class="form-control segmentedSelectWithInput"
+                        ng-options="percentage.label for priority in priorities"
+                        ng-model="variation.percentage">
                     <option>%</option>
-                    <option>{{defaultCurrency}}</option>
+                    <option>{{currency}}</option>
                 </select>
             </div>
         </div>

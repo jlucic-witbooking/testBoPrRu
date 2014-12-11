@@ -10,7 +10,15 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', ['$scope',function($scope) {
+        var defaultCurrency=null;
         $scope.list = [];
+        $scope.currency= defaultCurrency || "EUR";
+        $scope.priorities = [
+            {id:'1', label:'HIGH'},
+            {id:'2', label:'MEDIUM'},
+            {id:'3', label:'LOW'}
+        ];
+
         var lastIndex=5;
         var updateList = function() {
             for (var i = $scope.list.length; i <= lastIndex; i++) {
