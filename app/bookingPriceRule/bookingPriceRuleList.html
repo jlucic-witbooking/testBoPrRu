@@ -1,0 +1,16 @@
+<div class="mainForm center-block">
+    <div class="floatleft">
+        <ul class="row sortableList" ui-sortable="sortableOptions" ng-model="bookingPriceRules">
+            <li  ng-repeat="bookingPriceRule in bookingPriceRules "  class="item">
+                <div class="col-xs-12 col-sm-6 col-md-8" >
+                    <span>{{bookingPriceRule.ticker}}</span>
+                </div>
+                <div class="col-xs-6 col-md-4" >
+                    <span>{{bookingPriceRule.order}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+

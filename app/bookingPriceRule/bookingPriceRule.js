@@ -4,10 +4,19 @@ angular.module('myApp.view1', ['ngRoute'
 
 ])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-            templateUrl: 'view1/view1.html',
-            controller: 'editRule'
-        });
+        $routeProvider
+            .when('/bookingPriceRule/new', {
+                templateUrl: 'bookingPriceRule/bookingPriceRule.html',
+                controller: 'editRule'
+            })
+            .when('/bookingPriceRule/list', {
+                templateUrl: 'bookingPriceRule/bookingPriceRuleList.html',
+                controller: 'BookingPriceRuleListController'
+            })
+            .when('/bookingPriceRule/:id', {
+                templateUrl: 'bookingPriceRule/bookingPriceRule.html',
+                controller: 'editRule'
+            })
     }])
     .controller('editRule', ['$scope', function ($scope) {
         var defaultCurrency = null;
@@ -88,73 +97,6 @@ angular.module('myApp.view1', ['ngRoute'
         }
 
 
-/*
-        {
-            "ticker": "TestName",
-            "formula": "c1 && c2 && c3 && c4 && c5",
-            "rulePriority": "LOW",
-            "priceVariation": 55.5,
-            "percentage": true,
-            "stackable": false,
-            "conditions": [
-            {
-                "days": [
-                    "MONDAY",
-                    "FRIDAY",
-                    "TUESDAY"
-                ],
-                "id": 1,
-                "conditionType": {
-                    "CONTRACT": true,
-                    "INCLUDE": true
-                },
-                "type": "WeekDayCondition"
-            },
-            {
-                "start": "09:00:00.000",
-                "end": "21:22:00.000",
-                "timezone": "Europe/Madrid",
-                "id": 2,
-                "conditionType": {
-                    "CONTRACT": true
-                },
-                "type": "HourRangeCondition"
-            },
-            {
-                "dataValueHolderTickers": [
-                    "stand_1a_SA_nr"
-                ],
-                "id": 3,
-                "conditionType": {
-                    "INCLUDE": true,
-                    "EXACT": true
-                },
-                "type": "TickerCondition"
-            },
-            {
-                "start": "2013-01-01T00:00:00.000+01:00",
-                "end": "2014-01-01T00:00:00.000+01:00",
-                "timezone": "Europe/Madrid",
-                "id": 4,
-                "conditionType": {
-                    "STAY": true
-                },
-                "type": "DatetimeRangeCondition"
-            },
-            {
-                "countries": [
-                    "ES"
-                ],
-                "id": 5,
-                "conditionType": {
-                    "INCLUDE": true
-                },
-                "type": "CountryOfOriginCondition"
-            }
-        ],
-            "order": 100
-        }
-*/
 
         //TimePicker
         $scope.data.timeto = new Date(0, 0, 0, 0, 0, 0, 0);
@@ -174,4 +116,23 @@ angular.module('myApp.view1', ['ngRoute'
         $scope.data.stayEntryDate = new Date();
         $scope.data.stayExitDate = new Date();
         $scope.data.stayExitDate.setMonth($scope.data.stayExitDate.getMonth() + 1);
+    }])
+    .controller('BookingPriceRuleListController', ['$scope', 'BookingPriceRuleManager', function($scope, BookingPriceRuleManager) {
+        var establishmentTicker="hoteldemo.com.v6";
+
+        BookingPriceRuleManager.get(establishmentTicker).then(function(bookingPriceRules) {
+            bookingPriceRules.sort(function (a, b) {
+                return a.order < b.order;
+            });
+            $scope.sortableOptions = {
+                stop: function(e, ui) {
+                    var totalRules=$scope.bookingPriceRules.length;
+                    for (var index in $scope.bookingPriceRules) {
+                        var newOrder=totalRules-parseInt(index);
+                        $scope.bookingPriceRules[index].order = newOrder*100;
+                    }
+                }
+            };
+            $scope.bookingPriceRules = bookingPriceRules
+        });
     }]);

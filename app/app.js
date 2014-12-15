@@ -4,12 +4,16 @@
 angular.module('myApp', [
     'ngRoute',
     'myApp.view1',
+    'myApp.constants',
     'ui.date',
+    'ui.sortable',
     'ui.bootstrap',
     'pascalprecht.translate',
     'frapontillo.bootstrap-duallistbox',
-    'checklist-model'
+    'checklist-model',
+    'bookingPriceRuleModel',
+    'bookingPriceRuleService'
 ]).
     config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/view1'});
+        $routeProvider.otherwise({redirectTo: '/bookingPriceRule/list'});
     }]);
