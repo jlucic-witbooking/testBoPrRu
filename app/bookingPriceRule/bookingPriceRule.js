@@ -117,22 +117,50 @@ angular.module('myApp.view1', ['ngRoute'
         $scope.data.stayExitDate = new Date();
         $scope.data.stayExitDate.setMonth($scope.data.stayExitDate.getMonth() + 1);
     }])
-    .controller('BookingPriceRuleListController', ['$scope', 'BookingPriceRuleManager', function($scope, BookingPriceRuleManager) {
+    .controller('BookingPriceRuleListController', ['$scope', 'BookingPriceRuleManager','$modal', function($scope, BookingPriceRuleManager,$modal) {
         var establishmentTicker="hoteldemo.com.v6";
+
+        $scope.sortableOptions = {
+            stop: function(e, ui) {
+                var totalRules=$scope.bookingPriceRules.length;
+                for (var index in $scope.bookingPriceRules) {
+                    var newOrder=totalRules-parseInt(index);
+                    $scope.bookingPriceRules[index].order = newOrder*100;
+                }
+            }
+        };
+
+        $scope.deleteRule = function(bookingPriceRule,index){
+            var ModalInstanceCtrl = ['$scope','$modalInstance',function ($scope, $modalInstance) {
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+                $scope.cancel = function () {
+                    $modalInstance.close();
+                };
+
+            }];
+
+            var modalInstance = $modal.open({
+                templateUrl: 'bookingPriceRuleDeleteModal.html',
+                controller: ModalInstanceCtrl
+            });
+
+            modalInstance.result.then(function () {
+                BookingPriceRuleManager.delete(establishmentTicker,bookingPriceRule);
+                $scope.bookingPriceRules.splice(index, 1);
+            }, function () {
+
+            });
+        };
+        $scope.rulesMap=BookingPriceRuleManager._pool;
 
         BookingPriceRuleManager.get(establishmentTicker).then(function(bookingPriceRules) {
             bookingPriceRules.sort(function (a, b) {
                 return a.order < b.order;
             });
-            $scope.sortableOptions = {
-                stop: function(e, ui) {
-                    var totalRules=$scope.bookingPriceRules.length;
-                    for (var index in $scope.bookingPriceRules) {
-                        var newOrder=totalRules-parseInt(index);
-                        $scope.bookingPriceRules[index].order = newOrder*100;
-                    }
-                }
-            };
-            $scope.bookingPriceRules = bookingPriceRules
+            $scope.bookingPriceRules = bookingPriceRules;
         });
+
+
     }]);

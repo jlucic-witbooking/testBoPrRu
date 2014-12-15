@@ -69,6 +69,8 @@ bookingPriceRuleService.factory('BookingPriceRuleManager', ['$http', '$q', '$res
         },
         delete: function(establishmentTicker,bookingPriceRule) {
             _resource.delete({establishmentTicker:establishmentTicker,id:bookingPriceRule.id});
+            delete this._pool[bookingPriceRule.id];
+            delete bookingPriceRule;
         },
         save: function(establishmentTicker,bookingPriceRule) {
             _resource.save({establishmentTicker:establishmentTicker,id:bookingPriceRule.id});

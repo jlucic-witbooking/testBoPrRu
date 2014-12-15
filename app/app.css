@@ -162,6 +162,17 @@
 .middleDay {
   text-align: center;
 }
-.sortableList {
+.bookingPriceRuleList {
+  text-align: center;
+  margin: 20px 20px 0 20px;
+}
+.bookingPriceRuleList .row {
+  margin: 0;
+}
+.bookingPriceRuleList .sortableList {
   list-style-type: none;
+  padding: 0;
+}
+.bookingPriceRuleList .col-xs-3 {
+  border: 1px solid #000000;
 }
