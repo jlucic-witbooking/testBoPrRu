@@ -18,39 +18,88 @@ angular.module('myApp.view1', ['ngRoute'
                 controller: 'editRule'
             })
     }])
-    .controller('editRule', ['$scope', function ($scope) {
+    .controller('editRule', ['$scope','COUNTRIES', function ($scope,COUNTRIES) {
         var defaultCurrency = null;
         $scope.data = {};
         $scope.list = [];
+
         $scope.currency = defaultCurrency || "EUR";
+
         $scope.priorities = [
             {id: '1', label: 'HIGH'},
             {id: '2', label: 'MEDIUM'},
             {id: '3', label: 'LOW'}
         ];
-        $scope.signs = [
-            {id: '1', label: '+'},
-            {id: '2', label: '-'}
-        ];
-        $scope.data.operation=$scope.signs[0];
 
-        $scope.variationTypes = [
-            {id: '1', label: $scope.currency },
-            {id: '2', label: '%'}
-        ];
-        $scope.data.percentage=$scope.variationTypes[0];
-
-
-        var lastIndex = 5;
-        var updateList = function () {
-            for (var i = $scope.list.length; i <= lastIndex; i++) {
-                $scope.list.push({
-                    'id': '_' + (i + 1),
-                    'text': 'element ' + (i + 1)
-                });
+        /****************** PRICEVARIATION GETTER SETTER***************************************/
+        $scope.data.priceVariation = 0;
+        $scope.priceVariation = function (newPriceVariation) {
+            if (angular.isDefined(newPriceVariation)) {
+                var sign = $scope.sign().id === "POSITIVE" ? 1 : -1;
+                $scope.data.priceVariation =  Math.abs(newPriceVariation) * sign;
+            }else{
+                newPriceVariation=Math.abs($scope.data.priceVariation);
             }
+            return newPriceVariation;
         };
-        updateList();
+        /******************END PRICEVARIATION GETTER SETTER************************************/
+
+
+        /********************* SIGN GETTER SETTER***************************************/
+        $scope.signs = [
+            {id: 'POSITIVE', label: '+'},
+            {id: 'NEGATIVE', label: '-'}
+        ];
+        var _sign=$scope.signs[0];
+        $scope.sign = function (newValue) {
+            if (angular.isDefined(newValue)) {
+                _sign=newValue;
+                var sign = newValue.id === "POSITIVE" ? 1 : -1;
+                $scope.data.priceVariation =  Math.abs($scope.data.priceVariation) * sign;
+            }
+            return _sign;
+        };
+        /******************END PERCENTAGE GETTER SETTER***************************************/
+
+
+
+        /**********************PERCENTAGE GETTER SETTER***************************************/
+        $scope.variationTypes = [
+            {id: 'AMOUNT', label: $scope.currency },
+            {id: 'PERCENT', label: '%'}
+        ];
+        var _percentage=$scope.variationTypes[0];
+        $scope.percentage = function (newValue) {
+            if (angular.isDefined(newValue)) {
+                _percentage=newValue;
+            }
+            $scope.data.percentage = _percentage.id === "PERCENT";
+            return _percentage;
+        };
+        /******************END PERCENTAGE GETTER SETTER***************************************/
+
+
+
+
+        $scope.countries=COUNTRIES;
+        $scope.data.countries = [];
+
+        function countriesListFillIn() {
+            $scope.data.country = setMinus($scope.list, $scope.data.countries);
+        }
+
+        function setMinus(A, B) {
+            var map = {}, C = [];
+
+            for (var i = B.length; i--;) {
+                map[B[i]] = null;
+            }
+            for (var i = A.length; i--;) {
+                if (!map.hasOwnProperty(A[i].id))
+                    C.push(A[i]);
+            }
+            return C;
+        }
 
         $scope.data.days = [];
         $scope.data.stayDays = [];
@@ -74,27 +123,7 @@ angular.module('myApp.view1', ['ngRoute'
         };
 
 
-        $scope.data.countries = [];
-        $scope.$watch('data.countries', function () {
-            countriesListFillIn();
-        });
 
-        function countriesListFillIn() {
-            $scope.data.country = setMinus($scope.list, $scope.data.countries);
-        }
-
-        function setMinus(A, B) {
-            var map = {}, C = [];
-
-            for (var i = B.length; i--;) {
-                map[B[i]] = null;
-            }
-            for (var i = A.length; i--;) {
-                if (!map.hasOwnProperty(A[i].id))
-                    C.push(A[i]);
-            }
-            return C;
-        }
 
 
 
@@ -164,3 +193,51 @@ angular.module('myApp.view1', ['ngRoute'
 
 
     }]);
+
+/*
+{
+    "operation": {
+    "id": "1",
+        "label": "+"
+},
+    "percentage": {
+    "id": "1",
+        "label": "EUR"
+},
+    "days": [],
+    "stayDays": [],
+    "countries": [],
+    "timeto": "1899-12-30T23:00:00.000Z",
+    "timeuntil": "1899-12-30T23:00:00.000Z",
+    "contractEntryDate": "2014-12-16T07:10:59.370Z",
+    "contractExitDate": "2015-01-16T07:10:59.370Z",
+    "stayEntryDate": "2014-12-16T07:10:59.370Z",
+    "stayExitDate": "2015-01-16T07:10:59.370Z",
+    "country": [
+    {
+        "id": "_6",
+        "text": "element 6"
+    },
+    {
+        "id": "_5",
+        "text": "element 5"
+    },
+    {
+        "id": "_4",
+        "text": "element 4"
+    },
+    {
+        "id": "_3",
+        "text": "element 3"
+    },
+    {
+        "id": "_2",
+        "text": "element 2"
+    },
+    {
+        "id": "_1",
+        "text": "element 1"
+    }
+]
+}
+    */

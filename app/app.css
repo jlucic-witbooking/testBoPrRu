@@ -176,3 +176,15 @@
 .bookingPriceRuleList .col-xs-3 {
   border: 1px solid #000000;
 }
+.duallistbox {
+  height: 400px;
+}
+.codeBox {
+  position: absolute;
+  z-index: 99;
+  margin-top: -844px;
+  /* margin-right: 100px; */
+  /* margin-left: 1015px; */
+  right: 0px;
+  width: 351px;
+}
