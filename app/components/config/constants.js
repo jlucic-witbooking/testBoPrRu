@@ -14,7 +14,20 @@ angular.module('myApp.constants', [])
             BOOKING_PRICE_RULE_URL: BASE_URL+"/"+"bookingPriceRule"
         }
     })())
-    .constant('COUNTRIES',[{id:"AF",text:"Afghanistan"},
+    .constant('DATE_TIME_FORMAT',"YYYY-MM-DDTHH:mm:ss.SSSZ")
+    .constant('CONDITION_CLASS',{
+        COUNTRY_OF_ORIGIN:"CountryOfOriginCondition",
+        DATE_TIME_RANGE:"DatetimeRangeCondition"
+    })
+    .constant('CONDITION_TYPE',{
+        INCLUDE:"INCLUDE",
+        EXCLUDE:"EXCLUDE",
+        ALL:"ALL",
+        STAY:"STAY",
+        CONTRACT:"CONTRACT"
+    })
+    .constant('COUNTRIES',[
+        {id:"AF",text:"Afghanistan"},
         {id:"AX",text:"Åland Islands"},
         {id:"AL",text:"Albania"},
         {id:"DZ",text:"Algeria"},
@@ -262,4 +275,4 @@ angular.module('myApp.constants', [])
         {id:"EH",text:"Western Sahara"},
         {id:"YE",text:"Yemen"},
         {id:"ZM",text:"Zambia"},
-        {id:"ZW",text:"Zimbabwe"}])
+        {id:"ZW",text:"Zimbabwe"}]);

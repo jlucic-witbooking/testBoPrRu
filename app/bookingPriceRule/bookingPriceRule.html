@@ -1,4 +1,4 @@
-<form ng-controller="editRule" role="form" class="mainForm center-block">
+<form novalidate name="bookingPriceRuleForm" ng-controller="editRule" role="form" class="mainForm center-block">
 
     <div class="row firstRow">
 
@@ -45,7 +45,7 @@
     <div class="row contractDateRow row-xs-height ">
 
         <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
-            <span translate>trans.dates</span>
+            <span translate>trans.dates {{contractEntryDateOpen}}</span>
         </div>
 
         <div class="row col-xs-12 col-sm-10 col-md-11  col-sm-height col-middle ">
@@ -53,34 +53,47 @@
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="toggle($event,'contractEntryDate')"
                                 aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input  class="form-control" id="contractEntryDate"
-                           placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}" ui-date
-                           ng-model="data.contractEntryDate">
+                    <input type="text"
+                           ui-date
+                           class="form-control"
+                           id="contractEntryDate"
+                           placeholder="{{ 'trans.field.contractEntryDate.label' | translate }}"
+                           ng-model="contractEntryDate"
+                           ng-model-options="{ getterSetter: true }"  />
+
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="toggle($event,'contractExitDate')"
                                 aria-expanded="false">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <input  class="form-control" id="contractExitDate"
-                           placeholder="{{ 'trans.field.contractExitDate.label' | translate }}" ui-date
-                           ng-model="data.contractExitDate" >
+                    <input type="text"
+                           ui-date
+                           class="form-control"
+                           id="contractExitDate"
+                           placeholder="{{ 'trans.field.contractExitDate.label' | translate }}"
+                           ng-model="contractExitDate"
+                           ng-model-options="{ getterSetter: true }"  />
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-4 col-md-4 timeZonePicker">
                 <div class="input-group">
                     <select id="contractDateTimezonePicker" class="form-control"
-                            ng-model="data.contractDateTimezonePicker">
+                            ng-model="contractDateTimezonePicker">
                         <option>{{ 'trans.field.contractDateTimezone.placeholder' | translate }}</option>
                         <option>2</option>
                         <option>3</option>
@@ -243,7 +256,6 @@
             </div>
         </div>
     </div>
-
     <div class="row protectionDateRow row-xs-height ">
         <div class="col-xs-12 col-sm-4 col-md-1 col-sm-height col-middle">
             <span translate>trans.ctry</span>
@@ -251,7 +263,9 @@
 
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
             <div class="col-xs-12 col-sm-12 col-md-12 ">
-                <select ng-model="data.countries"
+                <select ng-model="excludedCountries"
+                        name="excludedCountries"
+                        ng-model-options="{ getterSetter: true }"
                         class="duallistbox"
                         ng-options="obj.id as obj.text for obj in countries"
                         multiple

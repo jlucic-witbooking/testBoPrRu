@@ -18,9 +18,10 @@ angular.module('myApp.view1', ['ngRoute'
                 controller: 'editRule'
             })
     }])
-    .controller('editRule', ['$scope','COUNTRIES', function ($scope,COUNTRIES) {
+    .controller('editRule', ['$scope','$filter','COUNTRIES','CONDITION_TYPE', 'CONDITION_CLASS','DATE_TIME_FORMAT',
+        function ($scope,$filter,COUNTRIES,CONDITION_TYPE,CONDITION_CLASS,DATE_TIME_FORMAT) {
         var defaultCurrency = null;
-        $scope.data = {};
+        $scope.data = {conditions:[]};
         $scope.list = [];
 
         $scope.currency = defaultCurrency || "EUR";
@@ -78,15 +79,19 @@ angular.module('myApp.view1', ['ngRoute'
         };
         /******************END PERCENTAGE GETTER SETTER***************************************/
 
-
-
+        /********************* COUNTRIES CONDITION GETTER SETTER***************************************/
+/*
+        "id": 5,
+        "conditionType": {
+            "INCLUDE": true
+        },
+        "countries": [
+            "ES"
+        ],
+        "type": "CountryOfOriginCondition"
+*/
 
         $scope.countries=COUNTRIES;
-        $scope.data.countries = [];
-
-        function countriesListFillIn() {
-            $scope.data.country = setMinus($scope.list, $scope.data.countries);
-        }
 
         function setMinus(A, B) {
             var map = {}, C = [];
@@ -96,10 +101,111 @@ angular.module('myApp.view1', ['ngRoute'
             }
             for (var i = A.length; i--;) {
                 if (!map.hasOwnProperty(A[i].id))
-                    C.push(A[i]);
+                    C.push(A[i].id);
             }
             return C;
         }
+
+        function getIncludedCountries() {
+            return setMinus(COUNTRIES, $scope.excludedCountries);
+        }
+
+        var _countryCondition={
+            id:null,
+            conditionType:{},
+            type:CONDITION_CLASS.COUNTRY_OF_ORIGIN,
+            countries:[]
+        };
+        _countryCondition.conditionType[CONDITION_TYPE.ALL] = true;
+        $scope.$watch("excludedCountries.length",function(newValue,oldValue){
+            if(oldValue===newValue){return;}
+            var excludedCountries=$scope.excludedCountries;
+            if (angular.isDefined(excludedCountries)) {
+                if (excludedCountries.length===COUNTRIES.length){
+                    $scope.bookingPriceRuleForm.excludedCountries.$setValidity("ALL_EXCLUDED", false);
+                }else if(excludedCountries.length>COUNTRIES.length/2){
+                    _countryCondition.conditionType={};
+                    _countryCondition.conditionType[CONDITION_TYPE.INCLUDE] = true;
+                    _countryCondition.countries=getIncludedCountries();
+                }else if(excludedCountries.length===0){
+                    _countryCondition.conditionType={};
+                    _countryCondition.conditionType[CONDITION_TYPE.ALL] = true;
+                }else{
+                    _countryCondition.conditionType={};
+                    _countryCondition.conditionType[CONDITION_TYPE.EXCLUDE] = true;
+                    _countryCondition.countries=excludedCountries;
+                }
+            }
+        });
+
+        $scope.data.conditions.push(_countryCondition);
+
+
+        /******************END COUNTRIES CONDITION GETTER SETTER***************************************/
+
+        /********************* CONTRACT_DATE CONDITION GETTER SETTER***************************************/
+        /*
+            {
+                "start": "2013-01-01T00:00:00.000+01:00",
+                "end": "2014-01-01T00:00:00.000+01:00",
+                "timezone": "Europe/Madrid",
+                "id": 4,
+                "conditionType": {
+                    "STAY": true
+                },
+                "type": "DatetimeRangeCondition"
+            },
+         $scope.toggle = function($event) {
+         $event.preventDefault();
+         $event.stopPropagation();
+
+         $scope.contractEntryDateOpen = true;
+         };
+
+         */
+
+        $scope.toggle = function($event,element) {
+            if(typeof $scope.datePickerStatus ==="undefined"){ $scope.datePickerStatus={} };
+            if(typeof $scope.datePickerStatus[element] ==="undefined"){ $scope.datePickerStatus[element]=false};
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datePickerStatus[element]=!$scope.datePickerStatus[element];
+            angular.element('#'+element).datepicker($scope.datePickerStatus[element] ? 'show' : 'hide')
+        };
+
+        var _contractDateTimeRangeCondition={
+            id:null,
+            start:null,
+            end:null,
+            timezone:null,
+            conditionType:{},
+            type:CONDITION_CLASS.DatetimeRangeCondition
+        };
+        _contractDateTimeRangeCondition.conditionType[CONDITION_TYPE.CONTRACT] = true;
+        var _contractEntryDate;
+        $scope.$watch("contractEntryDate",function(newValue,oldValue){
+            if(oldValue===newValue){return;}
+            if (angular.isDefined(newValue)) {
+                _contractEntryDate=newValue;
+            }else{
+                _contractEntryDate=null;
+            }
+            _contractDateTimeRangeCondition.start = moment(_contractEntryDate).utc().format(DATE_TIME_FORMAT) || null;
+        });
+
+        var _contractExitDate;
+        $scope.$watch("contractExitDate",function(newValue,oldValue){
+            if(oldValue===newValue){return;}
+            if (angular.isDefined(newValue)) {
+                _contractExitDate=newValue;
+            }else{
+                _contractExitDate=null;
+            }
+            _contractDateTimeRangeCondition.end = moment(_contractExitDate).utc().format(DATE_TIME_FORMAT) || null;
+        });
+
+        $scope.data.conditions.push(_contractDateTimeRangeCondition);
+        /******************END CONTRACT_DATE CONDITION GETTER SETTER***************************************/
 
         $scope.data.days = [];
         $scope.data.stayDays = [];
@@ -193,7 +299,74 @@ angular.module('myApp.view1', ['ngRoute'
 
 
     }]);
+/*
+{
+    "ticker": "TestName",
+    "formula": "c1 && c2 && c3 && c4 && c5",
+    "rulePriority": "LOW",
+    "priceVariation": 55.5,
+    "percentage": true,
+    "stackable": false,
+    "conditions": [
+    {
+        "days": [
+            "MONDAY",
+            "FRIDAY",
+            "TUESDAY"
+        ],
+        "id": 1,
+        "conditionType": {
+            "CONTRACT": true,
+            "INCLUDE": true
+        },
+        "type": "WeekDayCondition"
+    },
+    {
+        "start": "09:00:00.000",
+        "end": "21:22:00.000",
+        "timezone": "Europe/Madrid",
+        "id": 2,
+        "conditionType": {
+            "CONTRACT": true
+        },
+        "type": "HourRangeCondition"
+    },
+    {
+        "dataValueHolderTickers": [
+            "stand_1a_SA_nr"
+        ],
+        "id": 3,
+        "conditionType": {
+            "INCLUDE": true,
+            "EXACT": true
+        },
+        "type": "TickerCondition"
+    },
+    {
+        "start": "2013-01-01T00:00:00.000+01:00",
+        "end": "2014-01-01T00:00:00.000+01:00",
+        "timezone": "Europe/Madrid",
+        "id": 4,
+        "conditionType": {
+            "STAY": true
+        },
+        "type": "DatetimeRangeCondition"
+    },
+    {
+        "countries": [
+            "ES"
+        ],
+        "id": 5,
+        "conditionType": {
+            "INCLUDE": true
+        },
+        "type": "CountryOfOriginCondition"
+    }
+],
+    "order": 100
+}
 
+ */
 /*
 {
     "operation": {
