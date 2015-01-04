@@ -111,22 +111,27 @@ angular.module('myApp.view1', ['ngRoute'
 
                 $scope.currency = defaultCurrency || "EUR";
 
-                $scope.priorities = [
-                    {id: '1', label: 'HIGH'},
-                    {id: '2', label: 'MEDIUM'},
-                    {id: '3', label: 'LOW'}
-                ];
-                for(var i=0;i<$scope.priorities.length;i++){
-                    if($scope.priorities[i].label===bookingPriceRule.rulePriority){
-                        $scope.rulePriority=$scope.priorities[i];
-                        break;
+                /****************** PRIORITY GETTER SETTER***************************************/
+
+                $scope.priorities = {
+                    HIGH:  {id: 'HIGH', label: 'HIGH'},
+                    MEDIUM:{id: 'MEDIUM', label: 'MEDIUM'},
+                    LOW:   {id: 'LOW', label: 'LOW'}
+                };
+
+                $scope.rulePriority = function (newValue) {
+                    if (angular.isDefined(newValue)) {
+                        bookingPriceRule.rulePriority = newValue.id;
                     }
-                }
+                    return $scope.priorities[bookingPriceRule.rulePriority] || null;
+                };
 
                 $scope.ticker=bookingPriceRule.ticker || null;
 
+                /******************END PRIORITY GETTER SETTER************************************/
+
+
                 /****************** PRICEVARIATION GETTER SETTER***************************************/
-                var _priceVariation = bookingPriceRule.priceVariation  || 0;
                 $scope.priceVariation = function (newPriceVariation) {
                     if (angular.isDefined(newPriceVariation)) {
                         var sign = $scope.sign().id === "POSITIVE" ? 1 : -1;
@@ -142,14 +147,12 @@ angular.module('myApp.view1', ['ngRoute'
                     {id: 'POSITIVE', label: '+'},
                     {id: 'NEGATIVE', label: '-'}
                 ];
-                var _sign =  bookingPriceRule.priceVariation >=0 ? $scope.signs[0]:$scope.signs[1];
                 $scope.sign = function (newValue) {
                     if (angular.isDefined(newValue)) {
-                        _sign = newValue;
                         var sign = newValue.id === "POSITIVE" ? 1 : -1;
                         bookingPriceRule.priceVariation = Math.abs(bookingPriceRule.priceVariation) * sign;
                     }
-                    return _sign;
+                    return bookingPriceRule.priceVariation >=0 ? $scope.signs[0]:$scope.signs[1];
                 };
                 /******************END PERCENTAGE GETTER SETTER***************************************/
 
@@ -159,8 +162,6 @@ angular.module('myApp.view1', ['ngRoute'
                     {id: 'AMOUNT', label: $scope.currency},
                     {id: 'PERCENT', label: '%'}
                 ];
-                var _percentage =typeof bookingPriceRule.percentage !== "undefined" ? bookingPriceRule.percentage ? $scope.variationTypes[1]: $scope.variationTypes[0]  : $scope.variationTypes[0];
-
                 $scope.percentage = function (newValue) {
                     if (angular.isDefined(newValue)) {
                         bookingPriceRule.percentage = newValue.id === "PERCENT";
@@ -170,57 +171,52 @@ angular.module('myApp.view1', ['ngRoute'
                 /******************END PERCENTAGE GETTER SETTER***************************************/
 
                 /********************* COUNTRIES CONDITION GETTER SETTER***************************************/
-                /*
-                 "id": 5,
-                 "conditionType": {
-                 "INCLUDE": true
-                 },
-                 "countries": [
-                 "ES"
-                 ],
-                 "type": "CountryOfOriginCondition"
-                 */
 
                 $scope.countries = COUNTRIES;
 
-
-                function getIncludedCountries() {
-                    return setMinus(COUNTRIES, $scope.excludedCountries);
+                var getIncludedCountries=function (excludedCountries) {
+                    return setMinus(COUNTRIES, excludedCountries);
+                };
+                var _excludedCountries=[];
+                var _countryCondition= {
+                    id: null,
+                    conditionType: {},
+                    type: CONDITION_CLASS.COUNTRY_OF_ORIGIN,
+                    countries: []
+                };
+                _countryCondition.conditionType[CONDITION_TYPE.ALL] = true;
+                if(conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN]){
+                    _countryCondition=conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN][0];
+                    if(conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN][0].conditionType[CONDITION_TYPE.INCLUDE]){
+                        _excludedCountries=getIncludedCountries(_countryCondition.countries);
+                    }else if(conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN][0].conditionType[CONDITION_TYPE.EXCLUDE]){
+                        _excludedCountries=_countryCondition.countries;
+                    }
                 }
-                $scope.excludedCountriesSetter=function () {
-                    var excludedCountries = $scope.excludedCountries;
-                    if (angular.isDefined(excludedCountries)) {
-                        if (excludedCountries.length === COUNTRIES.length) {
+                $scope.excludedCountries=function(newValue){
+                    if (angular.isDefined(newValue)) {
+                        _excludedCountries.length=0;
+                        _excludedCountries=_excludedCountries.concat(newValue);
+                        if (_excludedCountries.length === COUNTRIES.length) {
                             $scope.bookingPriceRuleForm.excludedCountries.$setValidity("ALL_EXCLUDED", false);
-                        } else if (excludedCountries.length > COUNTRIES.length / 2) {
+                        } else if (_excludedCountries.length > COUNTRIES.length / 2) {
                             _countryCondition.conditionType = {};
                             _countryCondition.conditionType[CONDITION_TYPE.INCLUDE] = true;
-                            _countryCondition.countries = getIncludedCountries();
-                        } else if (excludedCountries.length === 0) {
+                            _countryCondition.countries = getIncludedCountries(_excludedCountries);
+                        } else if (_excludedCountries.length === 0) {
                             _countryCondition.conditionType = {};
                             _countryCondition.conditionType[CONDITION_TYPE.ALL] = true;
                         } else {
                             _countryCondition.conditionType = {};
                             _countryCondition.conditionType[CONDITION_TYPE.EXCLUDE] = true;
-                            _countryCondition.countries = excludedCountries;
+                            _countryCondition.countries = _excludedCountries;
                         }
                     }
+                    return _excludedCountries;
                 };
 
-                var _countryCondition;
-                if(conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN]){
-                    _countryCondition = conditions[CONDITION_CLASS.COUNTRY_OF_ORIGIN][0];
-                    $scope.excludedCountries=_countryCondition.countries;
-                    $scope.excludedCountriesSetter();
-                }else{
-                    _countryCondition = {
-                        id: null,
-                        conditionType: {},
-                        type: CONDITION_CLASS.COUNTRY_OF_ORIGIN,
-                        countries: []
-                    };
-                    _countryCondition.conditionType[CONDITION_TYPE.ALL] = true;
-                }
+
+
 
                 $scope.data.conditions.push(_countryCondition);
 

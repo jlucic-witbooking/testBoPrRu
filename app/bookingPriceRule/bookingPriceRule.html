@@ -10,10 +10,18 @@
 
         <div class="col-xs-12 col-sm-12 col-md-4 priorityContainer">
             <label for="priority" translate>trans.field.priority.label</label>
+<!--
             <select id="priority" class="form-control"
                     ng-model="rulePriority" ng-options="priority.label for priority in priorities">
                 <option value="">-- {{ 'trans.field.priority.placeholder' | translate }} --</option>
             </select>
+-->
+            <select id="priority" class="form-control"
+                    ng-model="rulePriority" ng-options="value.label for (key , value) in priorities"
+                    ng-model-options="{ getterSetter: true }">
+            <option value="">-- {{ 'trans.field.priority.placeholder' | translate }} --</option>
+            </select>
+
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-4 variationContainer">
@@ -282,9 +290,8 @@
         <div class=" col-xs-12 col-sm-10 col-md-11 col-sm-height col-middle  ">
             <div class="col-xs-12 col-sm-12 col-md-12 ">
                 <select ng-model="excludedCountries"
-                        ng-change="setter('excludedCountries')"
-                        name="excludedCountries"
                         ng-model-options="{ getterSetter: true }"
+                        name="excludedCountries"
                         class="duallistbox"
                         ng-options="obj.id as obj.text for obj in countries"
                         multiple
