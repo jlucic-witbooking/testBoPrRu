@@ -22,6 +22,7 @@ angular.module('myApp.constants', [])
     .constant('DATE_TIME_FORMAT',"YYYY-MM-DDTHH:mm:ss.SSSZ")
     .constant('DATE_TIME_FORMAT_NO_OFFSET',"YYYY-MM-DDTHH:mm:ss.SSS")
     .constant('TIME_FORMAT',"HH:mm:ss.SSSZ")
+    .constant('TIME_FORMAT_NO_OFFSET',"HH:mm:ss.SSS")
     .constant('WEEKDAYS',['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'])
     .constant('CONDITION_CLASS',{
         COUNTRY_OF_ORIGIN:"CountryOfOriginCondition",

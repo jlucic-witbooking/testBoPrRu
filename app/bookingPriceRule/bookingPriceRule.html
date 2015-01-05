@@ -237,7 +237,7 @@
                 <div class="input-group">
                     <select id="stayDateTimezonePicker" class="form-control"
                             ng-model="stayDateTimezone"
-                            ng-change="setter('stayDateTimezonePicker')"
+                            ng-change="setter('stayDateTimezone')"
                             ng-options="timezone.text for timezone in timezones"
                             ng-model-options="{ getterSetter: true }">
                     </select>
@@ -304,8 +304,10 @@
 
     <div class="codeBox">
         <pre class="alert alert-info">
-            {{data | json}}
+            {{bookingPriceRule.getConditionsMap() | json}}
         </pre>
     </div>
+
+    <button ng-click="save()">{{'trans.save' | translate}}</button>
 
 </form>

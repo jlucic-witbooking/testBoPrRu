@@ -20,12 +20,10 @@ angular.module('myApp.view1', ['ngRoute'
             })
     }])
     .controller('editRule', ['$scope', '$filter','$routeParams','BookingPriceRuleManager','BookingPriceRule','COUNTRIES', 'CONDITION_TYPE', 'CONDITION_CLASS', 'DEFAULT_DATE_PICKER_SETTINGS',
-        'DATE_TIME_FORMAT','TIMEZONES','DATE_TIME_FORMAT_NO_OFFSET','TIME_FORMAT','WEEKDAYS','DATE_FORMAT',
+        'DATE_TIME_FORMAT','TIMEZONES','DATE_TIME_FORMAT_NO_OFFSET','TIME_FORMAT','TIME_FORMAT_NO_OFFSET','WEEKDAYS','DATE_FORMAT',
         function ($scope, $filter,$routeParams,BookingPriceRuleManager,BookingPriceRule, COUNTRIES, CONDITION_TYPE, CONDITION_CLASS,DEFAULT_DATE_PICKER_SETTINGS, DATE_TIME_FORMAT,
-                  TIMEZONES,DATE_TIME_FORMAT_NO_OFFSET,TIME_FORMAT,WEEKDAYS,DATE_FORMAT) {
+                  TIMEZONES,DATE_TIME_FORMAT_NO_OFFSET,TIME_FORMAT,TIME_FORMAT_NO_OFFSET,WEEKDAYS,DATE_FORMAT) {
 
-            scopi=$scope;
-            bookingPriceRuleManager=BookingPriceRuleManager;
             var establishmentTicker=$routeParams.establishmentTicker;
             var bookingPriceRuleID=$routeParams.id || null;
 
@@ -55,7 +53,7 @@ angular.module('myApp.view1', ['ngRoute'
                 };
 
                 var convertFromUTC=function(value,offset){
-                    return moment(value+offset,TIME_FORMAT).toDate();
+                    return moment(value,TIME_FORMAT).toDate();
                 };
 
                 function setMinus(A, B) {
@@ -106,8 +104,9 @@ angular.module('myApp.view1', ['ngRoute'
                 var bookingPriceRule=bookingPriceRule? bookingPriceRule: new BookingPriceRule();
                 var conditions = bookingPriceRule && bookingPriceRule.getConditionsMap() || false;
 
-                $scope.data = {conditions: []};
                 $scope.list = [];
+
+                $scope.bookingPriceRule=bookingPriceRule;
 
                 $scope.currency = defaultCurrency || "EUR";
 
@@ -211,15 +210,10 @@ angular.module('myApp.view1', ['ngRoute'
                             _countryCondition.conditionType[CONDITION_TYPE.EXCLUDE] = true;
                             _countryCondition.countries = _excludedCountries;
                         }
+                        bookingPriceRule.addCondition(_countryCondition);
                     }
                     return _excludedCountries;
                 };
-
-
-
-
-                $scope.data.conditions.push(_countryCondition);
-
 
                 /******************END COUNTRIES CONDITION GETTER SETTER***************************************/
 
@@ -311,6 +305,7 @@ angular.module('myApp.view1', ['ngRoute'
                     if (angular.isDefined(newValue)) {
                         _contractEntryDate = newValue;
                         _contractDateTimeRangeCondition.start =_contractEntryDate? convertToUTC(_contractEntryDate,$scope.contractDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
+                        bookingPriceRule.addCondition(_contractDateTimeRangeCondition);
                     }
                     return _contractEntryDate;
                 };
@@ -318,8 +313,9 @@ angular.module('myApp.view1', ['ngRoute'
                 $scope.contractExitDate=function (newValue) {
                     if (angular.isDefined(newValue)) {
                         _contractExitDate = newValue;
+                        _contractDateTimeRangeCondition.end =_contractExitDate? convertToUTC(_contractExitDate,$scope.contractDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
+                        bookingPriceRule.addCondition(_contractDateTimeRangeCondition);
                     }
-                    _contractDateTimeRangeCondition.end =_contractExitDate? convertToUTC(_contractExitDate,$scope.contractDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
                     return _contractExitDate;
                 };
 
@@ -333,9 +329,9 @@ angular.module('myApp.view1', ['ngRoute'
                     if(_contractDateTimeRangeCondition.end){
                         _contractDateTimeRangeCondition.end=convertToUTC($scope.contractExitDate,$scope.contractDateTimezone.offset).format(TIME_FORMAT);
                     }
+                    bookingPriceRule.addCondition(_contractDateTimeRangeCondition);
                 };
 
-                $scope.data.conditions.push(_contractDateTimeRangeCondition);
                 /******************END CONTRACT_DATE CONDITION GETTER SETTER***************************************/
 
                 /********************* CONTRACT_HOUR_RANGE CONDITION GETTER SETTER***************************************/
@@ -381,23 +377,25 @@ angular.module('myApp.view1', ['ngRoute'
                 $scope.contractHourRangeTimezoneSetter=function(value){
                     _contractHourRangeCondition.timezone =value.value;
                     if(_contractHourRangeCondition.start){
-                        _contractHourRangeCondition.start=convertToUTC($scope.contractHourRangeConditionStart,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT);
+                        _contractHourRangeCondition.start=convertToUTC($scope.contractHourRangeConditionStart,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT_NO_OFFSET);
                     }
                     if(_contractHourRangeCondition.end){
-                        _contractHourRangeCondition.end=convertToUTC($scope.contractHourRangeConditionEnd,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT);
+                        _contractHourRangeCondition.end=convertToUTC($scope.contractHourRangeConditionEnd,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT_NO_OFFSET);
                     }
+                    bookingPriceRule.addCondition(_contractHourRangeCondition);
                 };
 
                 $scope.contractHourRangeConditionStart=_contractHourRangeCondition.start ? convertFromUTC(_contractHourRangeCondition.start,$scope.contractHourRangeTimezone.offset):null;
                 $scope.contractHourRangeConditionStartSetter=function(value){
-                    _contractHourRangeCondition.start=convertToUTC(value,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT);
+                    _contractHourRangeCondition.start=convertToUTC(value,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT_NO_OFFSET);
+                    bookingPriceRule.addCondition(_contractHourRangeCondition);
                 };
 
                 $scope.contractHourRangeConditionEnd=_contractHourRangeCondition.end ? convertFromUTC(_contractHourRangeCondition.end,$scope.contractHourRangeTimezone.offset):null;
                 $scope.contractHourRangeConditionEndSetter=function(value){
-                    _contractHourRangeCondition.end=convertToUTC(value,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT);
+                    _contractHourRangeCondition.end=convertToUTC(value,$scope.contractHourRangeTimezone.offset).format(TIME_FORMAT_NO_OFFSET);
+                    bookingPriceRule.addCondition(_contractHourRangeCondition);
                 };
-                $scope.data.conditions.push(_contractHourRangeCondition);
                 /******************END CONTRACT_HOUR_RANGE CONDITION GETTER SETTER***************************************/
 
 
@@ -425,10 +423,21 @@ angular.module('myApp.view1', ['ngRoute'
                     $scope.weekDays.map(function(item){
                         $scope.days[property].push(item);
                     });
+                    if(property.indexOf('contract')>=0){
+                        bookingPriceRule.addCondition(_contractWeekDayCondition);
+                    }else{
+                        bookingPriceRule.addCondition(_stayWeekDayCondition);
+                    }
                 };
                 $scope.uncheckAll = function (property) {
                     /*Emptying array to keep reference*/
                     while($scope.days[property].length) {$scope.days[property].pop();}
+                    bookingPriceRule.addCondition(_contractWeekDayCondition);
+                    if(property.indexOf('contract')>=0){
+                        bookingPriceRule.addCondition(_contractWeekDayCondition);
+                    }else{
+                        bookingPriceRule.addCondition(_stayWeekDayCondition);
+                    }
                 };
 
                 var _contractWeekDayCondition = {
@@ -449,9 +458,10 @@ angular.module('myApp.view1', ['ngRoute'
                 }
 
                 $scope.days.contractWeekDaysConditionDays=_contractWeekDayCondition.days;
-
-                $scope.data.conditions.push(_contractWeekDayCondition);
-
+                $scope.$watch("days.contractWeekDaysConditionDays.length",function(newValue,oldValue){
+                    if(newValue===oldValue){return;}
+                    bookingPriceRule.addCondition(_contractWeekDayCondition);
+                });
                 /******************END CONTRACT WEEKDAY CONDITION GETTER SETTER***************************************/
 
                 /********************* STAY WEEKDAY CONDITION GETTER SETTER***************************************/
@@ -471,7 +481,11 @@ angular.module('myApp.view1', ['ngRoute'
                     }
                 }
                 $scope.days.stayWeekDaysConditionDays=_stayWeekDayCondition.days;
-                $scope.data.conditions.push(_stayWeekDayCondition);
+                $scope.$watch("days.stayWeekDaysConditionDays.length",function(newValue,oldValue){
+                    if(newValue===oldValue){return;}
+                    bookingPriceRule.addCondition(_stayWeekDayCondition);
+                });
+
                 /******************END STAY WEEKDAY CONDITION GETTER SETTER***************************************/
 
 
@@ -500,16 +514,18 @@ angular.module('myApp.view1', ['ngRoute'
                 $scope.stayEntryDate=function (newValue) {
                     if (angular.isDefined(newValue)) {
                         _stayEntryDate = newValue;
+                        bookingPriceRule.addCondition(_stayDateTimeRangeCondition);
                     }
-                    _stayDateTimeRangeCondition.start =_stayEntryDate? convertToUTC(_stayEntryDate,$scope.contractDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
+                    _stayDateTimeRangeCondition.start =_stayEntryDate? convertToUTC(_stayEntryDate,$scope.stayDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
                     return _stayEntryDate;
                 };
                 var _stayExitDate=_stayDateTimeRangeCondition.end && _stayDateTimeRangeCondition.timezone ? moment(_stayDateTimeRangeCondition.end,DATE_TIME_FORMAT).toDate() : null;
                 $scope.stayExitDate=function (newValue) {
                     if (angular.isDefined(newValue)) {
                         _stayExitDate = newValue;
+                        bookingPriceRule.addCondition(_stayDateTimeRangeCondition);
                     }
-                    _stayDateTimeRangeCondition.end =_stayExitDate? convertToUTC(_stayExitDate,$scope.contractDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
+                    _stayDateTimeRangeCondition.end =_stayExitDate? convertToUTC(_stayExitDate,$scope.stayDateTimezone.offset).format(DATE_TIME_FORMAT) : null;
                     return _stayExitDate;
                 };
 
@@ -518,14 +534,14 @@ angular.module('myApp.view1', ['ngRoute'
                 $scope.stayDateTimezoneSetter=function(value){
                     _stayDateTimeRangeCondition.timezone=value.value;
                     if(_stayDateTimeRangeCondition.start){
-                        _stayDateTimeRangeCondition.start=convertToUTC($scope.stayEntryDate,$scope.contractDateTimezone.offset).format(TIME_FORMAT);
+                        _stayDateTimeRangeCondition.start=convertToUTC($scope.stayEntryDate(),$scope.stayDateTimezone.offset).format(TIME_FORMAT);
                     }
                     if(_stayDateTimeRangeCondition.end){
-                        _stayDateTimeRangeCondition.end=convertToUTC($scope.stayExitDate,$scope.contractDateTimezone.offset).format(TIME_FORMAT);
+                        _stayDateTimeRangeCondition.end=convertToUTC($scope.stayExitDate(),$scope.stayDateTimezone.offset).format(TIME_FORMAT);
                     }
+                    bookingPriceRule.addCondition(_stayDateTimeRangeCondition);
                 };
 
-                $scope.data.conditions.push(_stayDateTimeRangeCondition);
                 /******************END CONTRACT_DATE CONDITION GETTER SETTER***************************************/
 
                 /********************* CODE CONDITION GETTER SETTER***************************************/
@@ -545,12 +561,18 @@ angular.module('myApp.view1', ['ngRoute'
                 $scope.code=function (newValue) {
                     if (angular.isDefined(newValue)) {
                         _codeCondition.supportedCodes = newValue.split(',');
+                        bookingPriceRule.addCondition(_codeCondition);
                     }
                     return _codeCondition.supportedCodes.join(',');
                 };
-                $scope.data.conditions.push(_codeCondition);
 
                 /******************END CODE CONDITION GETTER SETTER***************************************/
+
+                $scope.save=function(){
+                    bookingPriceRule.save();
+                    BookingPriceRuleManager.save(establishmentTicker,bookingPriceRule);
+                };
+
             }
 
         }])

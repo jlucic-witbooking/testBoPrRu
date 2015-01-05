@@ -7,7 +7,7 @@ var bookingPriceRuleService = angular.module('bookingPriceRuleService', ['ngReso
 bookingPriceRuleService.factory('BookingPriceRuleManager', ['$http', '$q', '$resource','API_CONFIG','BookingPriceRule', function($http, $q, $resource, API_CONFIG, BookingPriceRule) {
 
     var _resource = $resource(API_CONFIG.BOOKING_PRICE_RULE_URL+"/:establishmentTicker/:id",
-        {establishmentTicker:'@establishmentTicker', id:'@id'}
+        {establishmentTicker:'@establishmentTicker'}
     );
 
     var BookingPriceRuleManager = {
@@ -73,7 +73,7 @@ bookingPriceRuleService.factory('BookingPriceRuleManager', ['$http', '$q', '$res
             delete bookingPriceRule;
         },
         save: function(establishmentTicker,bookingPriceRule) {
-            _resource.save({establishmentTicker:establishmentTicker,id:bookingPriceRule.id});
+            _resource.save({establishmentTicker:establishmentTicker},bookingPriceRule);
         },
         updateInstance: function(bookingPriceRuleData) {
             var book = this._updateInstance(bookingPriceRuleData.id,bookingPriceRuleData);
