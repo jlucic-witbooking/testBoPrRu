@@ -29,7 +29,8 @@ angular.module('myApp.constants', [])
         DATE_TIME_RANGE:"DatetimeRangeCondition",
         HOUR_RANGE:"HourRangeCondition",
         WEEK_DAY:"WeekDayCondition",
-        CODE:"CodeCondition"
+        CODE:"CodeCondition",
+        TICKER:"TickerCondition"
     })
     .constant('CONDITION_TYPE',{
         INCLUDE:"INCLUDE",

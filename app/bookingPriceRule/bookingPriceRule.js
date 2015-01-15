@@ -568,6 +568,29 @@ angular.module('myApp.view1', ['ngRoute'
 
                 /******************END CODE CONDITION GETTER SETTER***************************************/
 
+
+
+
+                var _tickerCondition = {
+                    id: null,
+                    dataValueHolderTickers: [],
+                    conditionType: {},
+                    type: CONDITION_CLASS.TICKER
+                };
+                _tickerCondition.conditionType[CONDITION_TYPE.EXACT] = true;
+                _tickerCondition.conditionType[CONDITION_TYPE.INCLUDE] = true;
+
+                if(conditions[CONDITION_CLASS.TICKER]){
+                    for(var i=0; i<conditions[CONDITION_CLASS.TICKER].length ;i++){
+                        _contractWeekDayCondition=conditions[CONDITION_CLASS.TICKER][i];break;
+                    }
+                }
+                $scope.tickers={
+                    dataValueHolderTickers:_tickerCondition.days
+                };
+
+
+
                 $scope.save=function(){
                     bookingPriceRule.save();
                     BookingPriceRuleManager.save(establishmentTicker,bookingPriceRule);

@@ -304,9 +304,94 @@
 
     <div class="codeBox">
         <pre class="alert alert-info">
+<!--
             {{bookingPriceRule.getConditionsMap() | json}}
+-->
+            {{tickers.dataValueHolderTickers | json}}
         </pre>
     </div>
+
+
+
+
+
+
+
+    <div class="control-group">
+        <label class="control-label">Ticker / Habitación :</label>
+        <div class="controls">
+            <div id="tiposhabitacionasociados">
+                <div class="controles"><a href="#" id="checkallroomtypes">Seleccionar todos</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="#" id="uncheckallroomtypes">Deseleccionar todos</a></div>
+                <div class="input checkbox"><input type="hidden" name="data[Promocione][habitacionasociada_12]"
+                                                   id="PromocioneHabitacionasociada12_" value="0"><input type="checkbox" checklist-model="tickers.dataValueHolderTickers" checklist-value="'stand_1a_SA_cg'"
+                                                                                                         name="data[Promocione][habitacionasociada_12]"
+                                                                                                         value="1"
+                                                                                                         id="PromocioneHabitacionasociada12"><label
+                        for="PromocioneHabitacionasociada12"><span filter="0" class="check"
+                                                                   data-original-title="">Estándar</span> / <span filter="1"
+                                                                                                                  class="check"
+                                                                                                                  data-original-title="">1 adulto</span>
+                    ,<span filter="2" class="check checkHover" data-original-title=""> Sólo alojamiento </span> ,<span
+                            filter="3" class="check" data-original-title=""> Cancelación gratuita</span></label>&nbsp;<i
+                        class="icon-info-sign" title="stand_1a_SA_cg"></i>
+                </div>
+
+
+                <div class="input checkbox">
+                    <input type="hidden" name="data[Promocione][habitacionasociada_2]" id="PromocioneHabitacionasociada2_" value="0">
+                    <input type="checkbox" checklist-model="tickers.dataValueHolderTickers"
+                           checklist-value="'stand_1a_SA_nr'"
+                           name="data[Promocione][habitacionasociada_2]"
+                           checked="checked"
+                           value="1"
+                           id="PromocioneHabitacionasociada2">
+                    <label for="PromocioneHabitacionasociada2">
+                        <span filter="0" class="check"
+                              data-original-title="">Estándar</span> /
+                        <span filter="1"
+                              class="check"
+                              data-original-title="">1 adulto</span>
+                        ,<span filter="2" class="check checkHover" data-original-title=""> Sólo alojamiento </span> ,
+                        <span filter="3" class="check" data-original-title=""> No reembolsable</span>
+                    </label>&nbsp;<i class="icon-info-sign" title="stand_1a_SA_nr"></i>
+                </div>
+
+            </div>
+
+            <link href="https://www3.witbooking.com/v6/select/hoteldemo.com.v6/css/admin/themes/version6/wbextras.modextras.add.css" rel="stylesheet" type="text/css">
+            <script src="components/legacyTickerSelector.js"></script>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <button ng-click="save()">{{'trans.save' | translate}}</button>
 
